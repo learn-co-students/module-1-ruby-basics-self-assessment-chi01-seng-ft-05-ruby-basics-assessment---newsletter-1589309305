@@ -1,5 +1,3 @@
-require 'pry'
-
 #########################
 # Data for the newsletter
 #########################
@@ -28,33 +26,27 @@ ARTICLES = [
 #########################
 
 def calculate_recipients
-  # Using the SUBSCRIBERS and UNSUBSCRIBED arrays,
-  # write a method that will return an array of only the subscribers who haven't unsubscribed
+    (SUBSCRIBERS | UNSUBSCRIBED) - (SUBSCRIBERS & UNSUBSCRIBED)
 end
 
-def first_n_articles(number_of_articles
+def first_n_articles(number_of_articles)
   ARTICLES.first(number_of_articles)
 end
 
 def print_recipients
-  # Write a method that uses the output of calculate_recipients
-  # and returns a list of emails separated by commas
-  # Ex) "abc@email.com, def@email.com, ghi@email.com"
+  puts calculate_recipients.join(', ')
 end
 
 def print_one_article(article)
-  # Write a method that will take an article hash
-  # and print the title, author and text as a formatted string
-  # See the README/sample output for examples
+  puts article[:title] + "\nby: " + article[:author] + "\n" + article[:text] + "\n\n"
 end
 
 def print_many_articles(articles)
-  # Write a method that will take in an array of article hashes
-  # and format each one using the print_one_article method
+  articles.each {|article| print_one_article(article)}
 end
 
 def format_campus_location(campus)
-  "Flatiron #{campus["name"]}"
+  "Flatiron #{campus[:name]}"
 end
 
 def format_subject
@@ -62,7 +54,7 @@ def format_subject
 end
 
 def format_footer(campus)
-  "Flatiron Newsletter · #{campus[:name]} · #{campus[:address]} "
+  puts "Flatiron Newsletter · #{campus[:name]} · #{campus[:address]} "
 end
 
 def print_newsletter(number)
@@ -78,17 +70,12 @@ def print_newsletter(number)
   format_subject
   articles = first_n_articles(number)
   print_many_articles(articles)
-  puts format_footer(CAMPUS)
+  format_footer(CAMPUS)
 
-  end
 end
 
 def run
-  # We want our program to print three articles by default,
-  # but we can change that number here
-  print_newsletter("3")
+  print_newsletter(3)
 end
 
-# When we run "ruby newsletter.rb" in the command line,
-# the 'run' method will be called because we're calling it below.
 run
