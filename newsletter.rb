@@ -26,6 +26,7 @@ ARTICLES = [
 #########################
 
 def calculate_recipients
+# combined subtracted by difference
     (SUBSCRIBERS | UNSUBSCRIBED) - (SUBSCRIBERS & UNSUBSCRIBED)
 end
 
@@ -34,14 +35,17 @@ def first_n_articles(number_of_articles)
 end
 
 def print_recipients
+#takes array and returns string seperated by commas
   puts calculate_recipients.join(', ')
 end
 
 def print_one_article(article)
+# formats the article with line breaks
   puts article[:title] + "\nby: " + article[:author] + "\n" + article[:text] + "\n\n"
 end
 
 def print_many_articles(articles)
+# loops through each article and formats according to print_one_article
   articles.each {|article| print_one_article(article)}
 end
 
